@@ -1,0 +1,6 @@
+1:Bernie:3:Boxer:Male:Dogs,Children:Helped Ray Charles Around:Terry:dog
+2:Boogie:2:Bengal:Female:Cats:Starred in Boogie Nights:Lisa:cat
+3:Bark Twain:5:Dachshund:Male:Dogs,Children:Likes writing along the river:John:dog
+4:Purrlock Holmes:4:Ragdoll:Male:Cats:Knack for solving mysteries:Maya:cat
+5:Ruff Hefner:6:Bulldog:Male:Children:Parties with all the female dogs:Jake:dog
+6:Luna:1:Birman:Female:Dogs,Cats,Children:The first cat on the moon with Neil Armstrong:Anna:cat

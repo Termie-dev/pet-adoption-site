@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Question 8 of Assignment 1 for SOEN 287-CC taught by Yuhong Yan">
+    <meta name="author" content="Thomas Assalian, ID: 40287231">
+    <title>Adopt-A-Buddy</title>
+
+    <link rel="icon" href="adopt-a-buddy-logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Question7.css">
+
+</head>
+
+<body>
+
+    <!--Header container--> 
+    <%- include('parts/header') %>
+
+    <div class="nav-main">
+    <!--Navigation bar container-->
+        <nav>
+            <ul>
+                <li><a href="/home">Home Page</a></li>
+                <li><a href="/find-animal">Find a Dog or Cat</a></li>
+                <li><a href="/dog-care">Dog Care</a></li>
+                <li><a href="/cat-care">Cat Care</a></li>
+                <li><a href="/donate-pet">Have a Pet to Give Away</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/create-account">Create an Account</a></li>
+                <% if (session && session.user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul> 
+        </nav>
+
+        <!--Main content container-->
+        <div class="main-footer">
+            <main class="scroll-bar">
+                <h2>Find a Dog or Cat</h2>
+                <form id="find-pet" action="/find-animal" method="get">
+                    <div class="form-section">
+                        <label>Which animal would you like to search for?</label>
+                        <div class="choice-section">
+                            <input type="radio" id="dog" name="animal-type" value="dog" 
+                            <% if (searchCriteria && searchCriteria.animalType === 'dog') { %> checked <% } %> >
+                            <label for="dog">Dog</label>
+                
+                            <input type="radio" id="cat" name="animal-type" value="cat" 
+                            <% if (searchCriteria && searchCriteria.animalType === 'cat') { %> checked <% } %> >
+                            <label for="cat">Cat</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="breed">Breed of Dog or Cat:</label>
+                        <select id="breed" name="breed">
+                            <option value="any">Doesn't matter</option>
+                            <optgroup label="Dog Breeds">
+                                <% dogBreeds.forEach(breed => { %>
+                                    <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
+                                <% }) %>
+                            </optgroup>
+                            <optgroup label="Cat Breeds">
+                                <% catBreeds.forEach(breed => { %>
+                                    <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
+                                <% }) %>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="age">Preferred Age of Animal (In Years):</label>
+                        <select id="age" name="age">
+                            <option value="any">Doesn't matter</option>
+                            <% uniqueAges.forEach(age => { %>
+                                <option value="<%= age %>" <% if (searchCriteria && searchCriteria.age == age) { %> selected <% } %> ><%= age %> years</option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="sex">Preferred Sex of Animal:</label>
+                        <select id="sex" name="sex">
+                            <option value="any">Doesn't matter</option>
+                            <option value="male" <% if (searchCriteria && searchCriteria.sex === 'male') { %> selected <% } %> >Male</option>
+                            <option value="female" <% if (searchCriteria && searchCriteria.sex === 'female') { %> selected <% } %> >Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label>Compatibility:</label><br>
+                        <input class="choice-section" type="checkbox" id="dogs" name="compatibility" value="dogs" 
+                        <% if (searchCriteria && searchCriteria.compatibility && searchCriteria.compatibility.includes('dogs')) { %> checked <% } %> >
+                        <label for="dogs">Gets along with other dogs</label><br>
+                        <input class="choice-section" type="checkbox" id="cats" name="compatibility" value="cats" 
+                        <% if (searchCriteria && searchCriteria.compatibility && searchCriteria.compatibility.includes('cats')) { %> checked <% } %> >
+                        <label for="cats">Gets along with other cats</label><br>
+                    </div>
+                    
+                    <div class="form-section">
+                        <button type="submit">Submit</button>
+                        <button type="reset">Clear</button>
+                    </div>
+                </form>
+
+                <% if (filteredPets && filteredPets.length > 0) { %>
+    <h2>Available Pets</h2>
+    <div class="pets-container">
+        <% filteredPets.forEach(pet => { %>
+            <div class="pet">
+                <h2><%= pet.name %></h2>
+                <img 
+                    src="/images/<%= pet.breed.toLowerCase() %>.jpeg" 
+                    alt="<%= pet.breed %>" 
+                    onerror="this.onerror=null; this.src='/images/<%= pet.breed.toLowerCase() %>.webp'"
+                >
+                <p>Age: <%= pet.age %> years</p>
+                <p>Sex: <%= pet.sex %></p>
+                <p>Breed: <%= pet.breed %></p>
+                <p>Compatibility: <%= pet.compatibility %></p>
+                <p>Comments: <%= pet.description %></p>
+                <p>Owner: <%= pet.owner ? pet.owner : "Unknown" %></p>
+            </div>
+        <% }) %>
+  </div>
+        <% } else { %>
+            <p>No pets found matching your criteria.</p>
+        <% } %>
+            </main>
+        </div>
+    </div>
+
+    <%- include('parts/footer') %>
+
+    <script src="scripts/Question7.js"></script>
+    
+    <script>
+        document.querySelector('button[type="reset"]').addEventListener('click', function() {
+            window.location.href = '/find-animal';
+        });
+    </script>
+
+</body>
+
+</html>

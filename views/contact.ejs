@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Question 8 of Assignment 1 for SOEN 287-CC taught by Yuhong Yan">
+    <meta name="author" content="Thomas Assalian, ID: 40287231">
+    <title>Adopt-A-Buddy</title>
+
+    <link rel="icon" href="adopt-a-buddy-logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Question7.css">
+
+</head>
+
+<body>
+
+    <!--Header container--> 
+    <%- include('parts/header') %>
+
+    <div class="nav-main">
+    <!--Navigation bar container-->
+        <nav>
+            <ul>
+                <li><a href="/home">Home Page</a></li>
+                <li><a href="/find-animal">Find a Dog or Cat</a></li>
+                <li><a href="/dog-care">Dog Care</a></li>
+                <li><a href="/cat-care">Cat Care</a></li>
+                <li><a href="/donate-pet">Have a Pet to Give Away</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/create-account">Create an Account</a></li>
+                <% if (session && session.user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul> 
+        </nav>
+
+        <!--Main content container-->
+        <div class="main-footer">
+            <main>
+                    <h2>Contact Us</h2>
+                    <p><b>Company Owner:</b> Thomas Assalian</p>
+                    <p><b>Owner's Student ID:</b> 40287231</p>
+                    <p><b>Owner's e-mail:</b> <a href="mailto:tom.assalian@gmail.com">tom.assalian@gmail.com</a></p>
+            </main>
+        </div>
+    </div>
+
+    <%- include('parts/footer') %>
+
+    <script src="scripts/Question7.js"></script>
+
+</body>
+
+</html>

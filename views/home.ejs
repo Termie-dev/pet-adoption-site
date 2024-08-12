@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Question 8 of Assignment 1 for SOEN 287-CC taught by Yuhong Yan">
+    <meta name="author" content="Thomas Assalian, ID: 40287231">
+    <title>Adopt-A-Buddy</title>
+
+    <link rel="icon" href="adopt-a-buddy-logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Question7.css">
+
+</head>
+
+<body>
+
+    <!--Header container--> 
+    <%- include('parts/header') %>
+
+    <div class="nav-main">
+    <!--Navigation bar container-->
+        <nav>
+            <ul>
+                <li><a href="/home">Home Page</a></li>
+                <li><a href="/find-animal">Find a Dog or Cat</a></li>
+                <li><a href="/dog-care">Dog Care</a></li>
+                <li><a href="/cat-care">Cat Care</a></li>
+                <li><a href="/donate-pet">Have a Pet to Give Away</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/create-account">Create an Account</a></li>
+                <% if (session && session.user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul> 
+        </nav>
+
+        <!--Main content container-->
+        <div class="main-footer">
+            <main>
+                <h2>Home</h2>
+                <p>Welcome to Adopt-A-Buddy. We are an adoption agency located near Concordia University, Montréal, QC, Canada that are looking for people to adopt our lovely furry friends.</p>
+                <h3>About Us</h3>
+                <p>We at Adopt-A-Buddy think that every cat and dog deserves a loving family and home. Our team animal lovers is dedicated to rehoming resued animals and unwanted pets. We work hand in hand with local animal shelters and veterinary clinics to support our animals in the best possible way.</p>
+                <p>Our easy-to-navigate website, developed by our talented front-end developer Thomas Assalian, allows you to browse our available pets, search for a specific pet based on characteristics, find helpful tips on dog and cat care, and donate your pet to our foundation. We are here to guide you through the process of pet adoption and answer any questions you may have.</p>
+                <h3>Why Adopt from Us?</h3>
+                <ul class="indent">
+                    <li><strong>Detailed Vetting Process:</strong> All our fluffy friends are health-checked, vaccinated, and neutered if asked  before adoption.</li>
+                    <li><strong>Expert and Supportive Community:</strong> We are a team of cat and dog experts who will answer all of your questions and direct you to resources to help you get used to life with your new pet friend.</li>
+                    <li><strong>Transparency:</strong> We give details on the general profile of each pet, including more detailed information such as their history, temperament, health, and any special needs.</li>
+                </ul>
+                <h3>Get Started</h3>
+                <p>If you are ready to find your new best friend, start by <a href="avilable-pets.html">browsing our available pets</a>! If you have any questions, feel free to <a href="contact.html">contact us</a>.</p>
+            </main>
+        </div>
+    </div>
+
+    <%- include('parts/footer') %>
+
+    <script src="scripts/Question7.js"></script>
+
+</body>
+
+</html>     
