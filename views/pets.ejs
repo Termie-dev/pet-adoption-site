@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Question 8 of Assignment 1 for SOEN 287-CC taught by Yuhong Yan">
+    <meta name="author" content="Thomas Assalian, ID: 40287231">
+    <title>Adopt-A-Buddy</title>
+
+    <link rel="icon" href="adopt-a-buddy-logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Question7.css">
+
+</head>
+
+<body>
+
+    <!--Header container--> 
+    <%- include('parts/header') %>
+
+    <div class="nav-main">
+    <!--Navigation bar container-->
+        <nav>
+            <ul>
+                <li><a href="/home">Home Page</a></li>
+                <li><a href="/find-animal">Find a Dog or Cat</a></li>
+                <li><a href="/dog-care">Dog Care</a></li>
+                <li><a href="/cat-care">Cat Care</a></li>
+                <li><a href="/donate-pet">Have a Pet to Give Away</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/create-account">Create an Account</a></li>
+                <% if (session && session.user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul> 
+        </nav>
+
+        <!--Main content container-->
+        <div class="main-footer">
+            <main class="scroll-bar">
+                <h2>Available Pets</h2>
+                <div class="pets-container">
+                    <div class="pet">
+                        <h2>Bernie</h2>
+                        <img src="pet-images/boxer.jpeg" alt="Bernie">
+                        <br>
+                        <br>
+                        <p id="bernie"></p>
+                        <button>Interested</button>
+                    </div>
+                    <div class="pet">
+                        <h2>Boogie</h2>
+                        <img src="pet-images/bengal.webp" alt="Boogie">
+                        <br>
+                        <br>
+                        <p id="boogie"></p>
+                        <button>Interested</button>
+                    </div>
+                    <div class="pet">
+                        <h2>Bark Twain</h2>
+                        <img src="pet-images/dachshund.jpeg" alt="Bark Twain">
+                        <br>
+                        <br>
+                        <p id="twain"></p>
+                        <button>Interested</button>
+                    </div>
+                    <div class="pet">
+                        <h2>Purrlock Holmes</h2>
+                        <img src="pet-images/ragdoll.jpeg" alt="Purrlock Holmes">
+                        <br>
+                        <br>
+                        <p id="holmes"></p>
+                        <button>Interested</button>
+                    </div>
+                    <div class="pet">
+                        <h2>Ruff Hefner</h2>
+                        <img src="pet-images/bulldog.webp" alt="Ruff Heffner">
+                        <br>
+                        <br>
+                        <p id="hefner"></p>
+                        <button>Interested</button>
+                    </div>
+                    <div class="pet">
+                        <h2>Luna</h2>
+                        <img src="pet-images/birman.jpeg" alt="Luna">
+                        <br>
+                        <br>
+                        <p id="luna"></p>
+                        <button>Interested</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <%- include('parts/footer') %>
+
+    <script src="scripts/Question7.js"></script>
+
+</body>
+
+</html>

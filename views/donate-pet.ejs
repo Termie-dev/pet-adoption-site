@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Question 8 of Assignment 1 for SOEN 287-CC taught by Yuhong Yan">
+    <meta name="author" content="Thomas Assalian, ID: 40287231">
+    <title>Adopt-A-Buddy</title>
+
+    <link rel="icon" href="adopt-a-buddy-logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Question7.css">
+
+</head>
+
+<body>
+
+    <!--Header container--> 
+    <%- include('parts/header') %>
+
+    <div class="nav-main">
+    <!--Navigation bar container-->
+        <nav>
+            <ul>
+                <li><a href="/home">Home Page</a></li>
+                <li><a href="/find-animal">Find a Dog or Cat</a></li>
+                <li><a href="/dog-care">Dog Care</a></li>
+                <li><a href="/cat-care">Cat Care</a></li>
+                <li><a href="/donate-pet">Have a Pet to Give Away</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/create-account">Create an Account</a></li>
+                <% if (session && session.user) { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul> 
+        </nav>
+
+        <!--Main content container-->
+        <div class="main-footer">
+            <main class="scroll-bar">
+                <h2>Register a Pet</h2>
+                <form id="donate-pet" action="/donate-pet" method="post">
+                    <div class="form-section">
+                        <label>Is Your Pet a Dog or Cat?:</label>
+                        <div class="choice-section">
+                            <input type="radio" id="dog" name="animal-type" value="dog" required>
+                            <label for="dog">Dog</label>
+                            <input type="radio" id="cat" name="animal-type" value="cat" required>
+                            <label for="cat">Cat</label>
+                        </div>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="breed">Breed of Dog or Cat:</label>
+                        <select id="breed" name="breed">
+                            <option value="unknown">Unknown</option>
+                            <optgroup label="Dog Breeds">
+                                <option value="labrador">Labrador Retriever</option>
+                                <option value="german_shepherd">German Shepherd</option>
+                                <option value="golden_retriever">Golden Retriever</option>
+                                <option value="bulldog">Bulldog</option>
+                                <option value="beagle">Beagle</option>
+                                <option value="poodle">Poodle</option>
+                                <option value="rottweiler">Rottweiler</option>
+                                <option value="yorkshire_terrier">Yorkshire Terrier</option>
+                                <option value="boxer">Boxer</option>
+                                <option value="dachshund">Dachshund</option>
+                            </optgroup>
+                            <optgroup label="Cat Breeds">
+                                <option value="persian">Persian</option>
+                                <option value="maine_coon">Maine Coon</option>
+                                <option value="ragdoll">Ragdoll</option>
+                                <option value="british_shorthair">British Shorthair</option>
+                                <option value="siamese">Siamese</option>
+                                <option value="scottish_fold">Scottish Fold</option>
+                                <option value="sphynx">Sphynx</option>
+                                <option value="bengal">Bengal</option>
+                                <option value="birman">Birman</option>
+                                <option value="oriental_shorthair">Oriental Shorthair</option>
+                            </optgroup>
+                        </select>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="age">Age of Animal (In Years):</label>
+                        <select id="age" name="age">
+                            <option value="unknown">Unknown</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13+</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="sex">Sex of Animal:</label>
+                        <select id="sex" name="sex">
+                            <option value="unknown">Unknown</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-section">
+                        <label>Compatibility:</label><br>
+                        <input class="choice-section" type="checkbox" id="dogs" name="compatibility" value="dogs">
+                        <label for="dogs">Gets along with other dogs</label><br>
+                        <input class="choice-section" type="checkbox" id="cats" name="compatibility" value="cats">
+                        <label for="cats">Gets along with other cats</label><br>
+                        <input class="choice-section" type="checkbox" id="children" name="compatibility" value="children">
+                        <label for="children">Suitable for a family with small children</label>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="comments">Comment area:</label><br>
+                        <textarea id="comments" name="comments" placeholder="Brag about the animal you are putting up for adoption"></textarea>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="owner-name">Current owner's name:</label><br>
+                        <input type="text" id="owner-name" name="owner-name" required>
+                    </div>
+            
+                    <div class="form-section">
+                        <label for="owner-email">Current owner's email:</label><br>
+                        <input type="email" id="owner-email" name="owner-email" required>
+                    </div>
+            
+                    <div class="form-section">
+                        <button type="submit">Submit</button>
+                        <button type="reset">Clear</button>
+                    </div>
+    
+                    <% if (errorMessage) { %>
+                        <p class="error"><%= errorMessage %></p>
+                    <% } %>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <%- include('parts/footer') %>
+
+    <script src="scripts/Question7.js"></script>
+
+</body>
+
+</html>
