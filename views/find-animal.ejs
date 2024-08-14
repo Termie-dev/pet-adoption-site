@@ -57,25 +57,33 @@
                     
                     <div class="form-section">
                         <label for="breed">Breed of Dog or Cat:</label>
-                        <select id="breed" name="breed">
-                            <option value="any">Doesn't matter</option>
+                        <select id="breed" name="breed" required>
+                            <option value="" disabled selected>Select breed</option>
                             <optgroup label="Dog Breeds">
-                                <% dogBreeds.forEach(breed => { %>
-                                    <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
-                                <% }) %>
+                                <% if (dogBreeds.length > 0) { %>
+                                    <% dogBreeds.forEach(breed => { %>
+                                        <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
+                                    <% }) %>
+                                <% } else { %>
+                                    <option disabled>No dog breeds available</option>
+                                <% } %>
                             </optgroup>
                             <optgroup label="Cat Breeds">
-                                <% catBreeds.forEach(breed => { %>
-                                    <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
-                                <% }) %>
+                                <% if (catBreeds.length > 0) { %>
+                                    <% catBreeds.forEach(breed => { %>
+                                        <option value="<%= breed.toLowerCase() %>" <% if (searchCriteria && searchCriteria.breed === breed.toLowerCase()) { %> selected <% } %> ><%= breed %></option>
+                                    <% }) %>
+                                <% } else { %>
+                                    <option disabled>No cat breeds available</option>
+                                <% } %>
                             </optgroup>
                         </select>
                     </div>
                     
                     <div class="form-section">
                         <label for="age">Preferred Age of Animal (In Years):</label>
-                        <select id="age" name="age">
-                            <option value="any">Doesn't matter</option>
+                        <select id="age" name="age" required>
+                            <option value="" disabled selected>Select age</option>
                             <% uniqueAges.forEach(age => { %>
                                 <option value="<%= age %>" <% if (searchCriteria && searchCriteria.age == age) { %> selected <% } %> ><%= age %> years</option>
                             <% }) %>
@@ -84,8 +92,8 @@
                     
                     <div class="form-section">
                         <label for="sex">Preferred Sex of Animal:</label>
-                        <select id="sex" name="sex">
-                            <option value="any">Doesn't matter</option>
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled selected>Select sex</option>
                             <option value="male" <% if (searchCriteria && searchCriteria.sex === 'male') { %> selected <% } %> >Male</option>
                             <option value="female" <% if (searchCriteria && searchCriteria.sex === 'female') { %> selected <% } %> >Female</option>
                         </select>
@@ -99,6 +107,9 @@
                         <input class="choice-section" type="checkbox" id="cats" name="compatibility" value="cats" 
                         <% if (searchCriteria && searchCriteria.compatibility && searchCriteria.compatibility.includes('cats')) { %> checked <% } %> >
                         <label for="cats">Gets along with other cats</label><br>
+                        <input type="checkbox" id="compatible-children" name="compatibility" value="children" 
+                        <% if (searchCriteria && searchCriteria.compatibility && searchCriteria.compatibility.includes('children')) { %> checked <% } %> >
+                        <label for="compatible-children">Gets along with children</label>
                     </div>
                     
                     <div class="form-section">
@@ -142,6 +153,37 @@
         document.querySelector('button[type="reset"]').addEventListener('click', function() {
             window.location.href = '/find-animal';
         });
+
+        document.getElementById('find-pet').addEventListener('submit', function(event) {
+        const animalTypeDog = document.getElementById('dog').checked;
+        const animalTypeCat = document.getElementById('cat').checked;
+        const breed = document.getElementById('breed').value;
+        const age = document.getElementById('age').value;
+        const sex = document.getElementById('sex').value;
+        const compatibilityDogs = document.getElementById('dogs').checked;
+        const compatibilityCats = document.getElementById('cats').checked;
+        const compatibilityChildren = document.getElementById('compatible-children').checked;
+
+        // Check if an animal type is selected
+        if (!animalTypeDog && !animalTypeCat) {
+            alert('Please select either Dog or Cat.');
+            event.preventDefault(); // Prevent the form from submitting
+            return;
+        }
+
+        // Check if breed, age, and sex are selected
+        if (!breed || !age || !sex) {
+            alert('Please fill out all fields (Breed, Age, Sex).');
+            event.preventDefault(); // Prevent the form from submitting
+            return;
+        }
+
+        // Check if at least one compatibility option is selected
+        if (!compatibilityDogs && !compatibilityCats && !compatibilityChildren) {
+            alert('Please select at least one compatibility option.');
+            event.preventDefault(); // Prevent the form from submitting
+        }
+    });
     </script>
 
 </body>

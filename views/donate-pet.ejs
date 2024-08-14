@@ -54,8 +54,8 @@
             
                     <div class="form-section">
                         <label for="breed">Breed of Dog or Cat:</label>
-                        <select id="breed" name="breed">
-                            <option value="unknown">Unknown</option>
+                        <select id="breed" name="breed" required>
+                            <option value="" disabled selected>Select breed</option>
                             <optgroup label="Dog Breeds">
                                 <option value="labrador">Labrador Retriever</option>
                                 <option value="german_shepherd">German Shepherd</option>
@@ -85,8 +85,8 @@
             
                     <div class="form-section">
                         <label for="age">Age of Animal (In Years):</label>
-                        <select id="age" name="age">
-                            <option value="unknown">Unknown</option>
+                        <select id="age" name="age" required>
+                            <option value="" disabled selected>Select age</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -105,8 +105,8 @@
             
                     <div class="form-section">
                         <label for="sex">Sex of Animal:</label>
-                        <select id="sex" name="sex">
-                            <option value="unknown">Unknown</option>
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled selected>Select sex</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
@@ -118,13 +118,13 @@
                         <label for="dogs">Gets along with other dogs</label><br>
                         <input class="choice-section" type="checkbox" id="cats" name="compatibility" value="cats">
                         <label for="cats">Gets along with other cats</label><br>
-                        <input class="choice-section" type="checkbox" id="children" name="compatibility" value="children">
+                        <input class="choice-section" type="checkbox" id="compatible-children" name="compatibility" value="children">
                         <label for="children">Suitable for a family with small children</label>
                     </div>
             
                     <div class="form-section">
                         <label for="comments">Comment area:</label><br>
-                        <textarea id="comments" name="comments" placeholder="Brag about the animal you are putting up for adoption"></textarea>
+                        <textarea id="comments" name="comments" placeholder="Brag about the animal you are putting up for adoption" required></textarea>
                     </div>
             
                     <div class="form-section">
@@ -153,6 +153,51 @@
     <%- include('parts/footer') %>
 
     <script src="scripts/Question7.js"></script>
+
+    <script>
+        document.getElementById('donate-pet').addEventListener('submit', function(event) {
+            const animalTypeDog = document.getElementById('dog').checked;
+            const animalTypeCat = document.getElementById('cat').checked;
+            const breed = document.getElementById('breed').value;
+            const age = document.getElementById('age').value;
+            const sex = document.getElementById('sex').value;
+            const comments = document.getElementById('comments').value;
+            const ownerName = document.getElementById('owner-name').value;
+            const ownerEmail = document.getElementById('owner-email').value;
+            const compatibilityDogs = document.getElementById('dogs').checked;
+            const compatibilityCats = document.getElementById('cats').checked;
+            const compatibilityChildren = document.getElementById('compatible-children').checked;
+
+            let errorMessage = '';
+
+            // Check if an animal type is selected
+            if (!animalTypeDog && !animalTypeCat) {
+                errorMessage += 'Please select whether the pet is a Dog or a Cat.\n';
+            }
+
+            // Check if breed, age, and sex are selected
+            if (!breed || !age || !sex) {
+                errorMessage += 'Please fill out all fields (Breed, Age, Sex).\n';
+            }
+
+            // Check if comments, owner name, and owner email are filled out
+            if (!comments || !ownerName || !ownerEmail) {
+                errorMessage += 'Please fill out all fields (Comments, Owner Name, Owner Email).\n';
+            }
+
+            // Check if at least one compatibility option is selected
+            if (!compatibilityDogs && !compatibilityCats && !compatibilityChildren) {
+                errorMessage += 'Please select at least one compatibility option.\n';
+            }
+
+            // If there are any errors, display them and prevent the form from submitting
+            if (errorMessage) {
+                alert(errorMessage);
+                event.preventDefault(); // Prevent the form from submitting
+            }
+        });
+
+    </script>
 
 </body>
 

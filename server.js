@@ -161,43 +161,45 @@ app.get('/find-animal', (req, res) => {
             return { id, name, age: parseInt(age, 10), breed, sex, compatibility, description, owner, type };
         });
 
-        // Separate dog and cat breeds based on the 'type' field
         const dogBreeds = [...new Set(pets.filter(pet => pet.type.toLowerCase() === 'dog').map(pet => pet.breed))];
         const catBreeds = [...new Set(pets.filter(pet => pet.type.toLowerCase() === 'cat').map(pet => pet.breed))];
-
         const uniqueAges = [...new Set(pets.map(pet => pet.age))].sort((a, b) => a - b);
 
-        // Filter by animal type
-        if (animalType) {
+        if (animalType && animalType !== 'any') {
             pets = pets.filter(pet => pet.type.toLowerCase() === animalType.toLowerCase());
         }
 
-        // Filter by breed (case insensitive)
         if (breed && breed !== 'any') {
             pets = pets.filter(pet => pet.breed.toLowerCase() === breed.toLowerCase());
         }
 
-        // Filter by age range
         if (age && age !== 'any') {
-            let [minAge, maxAge] = age.split('-').map(Number);
-            pets = pets.filter(pet => pet.age >= minAge && pet.age <= maxAge);
+            const [minAge, maxAge] = age.split('-').map(Number);
+            if (!isNaN(minAge) && !isNaN(maxAge)) {
+                pets = pets.filter(pet => pet.age >= minAge && pet.age <= maxAge);
+            }
         }
 
-        // Filter by sex (case insensitive)
         if (sex && sex !== 'any') {
             pets = pets.filter(pet => pet.sex.toLowerCase() === sex.toLowerCase());
         }
 
-        // Filter by compatibility (case insensitive)
         if (compatibility) {
             const compatArray = Array.isArray(compatibility) ? compatibility : [compatibility];
-            pets = pets.filter(pet => 
-                compatArray.every(compat => pet.compatibility.toLowerCase().includes(compat.toLowerCase()))
-            );
+            pets = pets.filter(pet => {
+                const petCompatArray = pet.compatibility.split(',').map(compat => compat.trim().toLowerCase());
+                return compatArray.every(compat => petCompatArray.includes(compat.toLowerCase()));
+            });
         }
 
-        // Render the filtered pets to the find-animal.ejs template
-        res.render('find-animal', { filteredPets: pets, session: req.session, searchCriteria: req.query, dogBreeds, catBreeds, uniqueAges });
+        res.render('find-animal', { 
+            filteredPets: pets, 
+            session: req.session, 
+            searchCriteria: req.query, 
+            dogBreeds, 
+            catBreeds, 
+            uniqueAges 
+        });
     });
 });
 
